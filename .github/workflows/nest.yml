@@ -1,0 +1,25 @@
+name: Automatically deploy to nest
+
+on: [push]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    environment:
+      name: API Endpoint
+    steps:
+      - name: Connect to ssh, pull and systemctl restart
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ponderslime
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            cd /home/ponderslime/pub/api
+            git pull
+            systemctl --user restart api.service
+            ssh -O exit ponderslime@hackclub.app
+            gh run cancel ${{ github.run_id }}
+            gh run watch ${{ github.run_id }}

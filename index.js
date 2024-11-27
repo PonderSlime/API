@@ -1,14 +1,14 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = "2048"
 
 const city = "Colorado Springs"
 const state = "CO"
-const country = "US"
+const country = "USA"
 const slack_id = "U07AD6RKUBW"
-const extra = "idk what to put here!"
+const extra = "First ever api for me 😁!"
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.json({
     city,
     state,
